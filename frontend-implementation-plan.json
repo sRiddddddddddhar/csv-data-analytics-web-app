@@ -1,0 +1,74 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Add Authentication Overlay (Modal, localStorage, Logout Button)",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Create a full-screen login modal overlay component that renders on top of all existing content when the user is not authenticated",
+      "acceptanceCriteria": [
+        "A full-screen overlay appears when the user is not authenticated, covering all dashboard content.",
+        "The overlay contains Email and Password input fields and a Login button.",
+        "Submitting with non-empty email and password hides the overlay and shows the app.",
+        "Submitting with empty fields shows a validation error message.",
+        "No existing routes, section switching logic, or layout components are modified."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/LoginOverlay.tsx",
+          "operation": "create",
+          "description": "Create a new LoginOverlay component that renders a full-screen fixed overlay (z-index: 9999) with a centered card containing Email and Password input fields, a Login button, and validation error display. The component accepts isOpen boolean and onLoginSuccess callback props. Implements non-empty field validation and calls onLoginSuccess with a mock session token on successful validation. Uses shadcn/ui Card, Input, and Button components with dark theme styling consistent with the app."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Add authentication state management using useState to track whether user is authenticated. Import and conditionally render the LoginOverlay component as an additive layer inside the main return JSX, positioned before all existing content. The overlay wraps the entire app when isAuthenticated is false. On successful login callback, set isAuthenticated to true and write 'iq_auth_token' to localStorage. Add useEffect on mount to check localStorage for existing token and set isAuthenticated accordingly. Do NOT modify any existing section switching logic, routing, sidebar, or layout structure—only inject the overlay as a top-level conditional render."
+        }
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "summary": "Implement authentication state management using localStorage for session persistence",
+      "acceptanceCriteria": [
+        "After login, a session token key exists in localStorage.",
+        "Refreshing the page while the token exists skips the login overlay and shows the app directly.",
+        "After logout, the token key is removed from localStorage.",
+        "After logout, the login overlay is displayed again."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useAuth.ts",
+          "operation": "create",
+          "description": "Create a custom React hook useAuth that manages authentication state and localStorage operations. The hook returns isAuthenticated boolean state, a login function that writes 'iq_auth_token' with a mock session token string to localStorage and updates state, and a logout function that removes 'iq_auth_token' from localStorage and sets isAuthenticated to false. Include a useEffect that checks for the token on mount and initializes isAuthenticated accordingly."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Replace the local useState authentication state management with the useAuth hook. Import and destructure isAuthenticated, login, and logout from useAuth. Pass the login function as the onLoginSuccess callback to LoginOverlay. The logout function will be passed down to the Sidebar component via props for the Logout button."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Add a Logout button to the existing app header area that clears auth state and shows the login overlay",
+      "acceptanceCriteria": [
+        "A Logout button is visible in the header when the user is authenticated.",
+        "Clicking Logout clears the localStorage token and displays the login overlay.",
+        "All analytics, chart, regression, insights, and PDF export features remain fully functional after this change.",
+        "The build compiles successfully with no errors."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/Sidebar.tsx",
+          "operation": "modify",
+          "description": "Add an optional onLogout callback prop to the Sidebar component interface. In the sidebar header area (above or below the branding logo), conditionally render a Logout button using shadcn/ui Button component with ghost variant when onLogout prop is provided. Wire the button onClick to call onLogout. Style the button consistently with existing sidebar navigation items using dark theme classes. Do NOT modify any navigation links, PDF export functionality, or collapsible behavior."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Pass the logout function from useAuth hook as the onLogout prop to the Sidebar component. This wires the Logout button in Sidebar to trigger the logout flow, which will clear localStorage and cause the LoginOverlay to reappear. Ensure this change does not affect any existing props passed to Sidebar (sectionNames, activeSection, onSectionChange, hasData)."
+        }
+      ]
+    }
+  ]
+}

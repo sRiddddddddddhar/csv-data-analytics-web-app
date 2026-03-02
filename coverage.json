@@ -1,0 +1,68 @@
+{
+  "kind": "coverage_report",
+  "version": "1.0",
+  "generatedAt": "2026-03-01T09:41:54.443Z",
+  "sources": {
+    "buildRequest": true,
+    "implementationPlan": true
+  },
+  "requirements": {
+    "total": 3,
+    "implemented": 3,
+    "items": [
+      {
+        "id": "REQ-1",
+        "summary": "Create a full-screen login modal overlay component (LoginOverlay) that renders on top of all existing content when the user is not authenticated. The overlay must cover the entire viewport (fixed, z-index above all content), display a centered card with Email and Password fields, a login button, and basic validation (non-empty fields). On successful login, the overlay hides and the app content becomes visible. Do NOT modify App.tsx routing, section switching logic, Sidebar, or any existing layout structure — only inject the overlay as an additive layer inside App.tsx.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/LoginOverlay.tsx",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/LoginOverlay.tsx",
+          "frontend/src/App.tsx"
+        ]
+      },
+      {
+        "id": "REQ-2",
+        "summary": "Implement authentication state management using localStorage. On successful login, write a session token (e.g., key 'iq_auth_token' with a non-empty string value) to localStorage. On app load, read this key to determine if the user is already authenticated and skip showing the overlay if a valid token is present. On logout, remove the key from localStorage and show the login overlay again.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/hooks/useAuth.ts",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/hooks/useAuth.ts",
+          "frontend/src/App.tsx"
+        ]
+      },
+      {
+        "id": "REQ-3",
+        "summary": "Add a Logout button to the existing app header area (top bar or sidebar header, whichever is rendered in App.tsx or Sidebar.tsx). The button must be visible only when the user is authenticated. Clicking it clears the auth token from localStorage and triggers the login overlay to reappear. Do NOT modify any analytics, chart, regression, insights, PDF export, or AI copilot logic.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/Sidebar.tsx",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/Sidebar.tsx",
+          "frontend/src/App.tsx"
+        ]
+      }
+    ]
+  },
+  "changedFiles": [
+    "build-request.json",
+    "feature_evidence.json",
+    "frontend-file-summaries.txt",
+    "frontend-implementation-plan.json",
+    "frontend/src/App.tsx",
+    "frontend/src/components/LoginOverlay.tsx",
+    "frontend/src/components/Sidebar.tsx",
+    "frontend/src/hooks/useAuth.ts",
+    "project_state.json",
+    "scratch/component-selection.json",
+    "spec.md",
+    "spec_vs_diff_report.json"
+  ]
+}

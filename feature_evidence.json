@@ -1,0 +1,62 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-create-a-full-screen-login-modal-overlay-component-loginoverlay-that-renders-on-top-of-all-existing-content-when-the-user-is-not-authenticated-the-overlay-must-cover-the-entire-viewport-fixed-z-index-above-all-content-display-a-centered-card-with-email-and-password-fields-a-login-button-and-basic-validation-non-empty-fields-on-successful-login-the-overlay-hides-and-the-app-content-becomes-visible-do-not-modify-app-tsx-routing-section-switching-logic-sidebar-or-any-existing-layout-structure-only-inject-the-overlay-as-an-additive-layer-inside-app-tsx",
+      "featureTitle": "Create a full-screen login modal overlay component (LoginOverlay) that renders on top of all existing content when the user is not authenticated. The overlay must cover the entire viewport (fixed, z-index above all content), display a centered card with Email and Password fields, a login button, and basic validation (non-empty fields). On successful login, the overlay hides and the app content becomes visible. Do NOT modify App.tsx routing, section switching logic, Sidebar, or any existing layout structure — only inject the overlay as an additive layer inside App.tsx.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/LoginOverlay.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-authentication-state-management-using-localstorage-on-successful-login-write-a-session-token-e-g-key-iq-auth-token-with-a-non-empty-string-value-to-localstorage-on-app-load-read-this-key-to-determine-if-the-user-is-already-authenticated-and-skip-showing-the-overlay-if-a-valid-token-is-present-on-logout-remove-the-key-from-localstorage-and-show-the-login-overlay-again",
+      "featureTitle": "Implement authentication state management using localStorage. On successful login, write a session token (e.g., key 'iq_auth_token' with a non-empty string value) to localStorage. On app load, read this key to determine if the user is already authenticated and skip showing the overlay if a valid token is present. On logout, remove the key from localStorage and show the login overlay again.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/hooks/useAuth.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-a-logout-button-to-the-existing-app-header-area-top-bar-or-sidebar-header-whichever-is-rendered-in-app-tsx-or-sidebar-tsx-the-button-must-be-visible-only-when-the-user-is-authenticated-clicking-it-clears-the-auth-token-from-localstorage-and-triggers-the-login-overlay-to-reappear-do-not-modify-any-analytics-chart-regression-insights-pdf-export-or-ai-copilot-logic",
+      "featureTitle": "Add a Logout button to the existing app header area (top bar or sidebar header, whichever is rendered in App.tsx or Sidebar.tsx). The button must be visible only when the user is authenticated. Clicking it clears the auth token from localStorage and triggers the login overlay to reappear. Do NOT modify any analytics, chart, regression, insights, PDF export, or AI copilot logic.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/Sidebar.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

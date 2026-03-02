@@ -1,0 +1,90 @@
+{
+  "kind": "build_request",
+  "title": "Add Authentication Overlay (Modal, localStorage, Logout Button)",
+  "projectName": "InsightIQ",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Create a full-screen login modal overlay component (LoginOverlay) that renders on top of all existing content when the user is not authenticated. The overlay must cover the entire viewport (fixed, z-index above all content), display a centered card with Email and Password fields, a login button, and basic validation (non-empty fields). On successful login, the overlay hides and the app content becomes visible. Do NOT modify App.tsx routing, section switching logic, Sidebar, or any existing layout structure — only inject the overlay as an additive layer inside App.tsx.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-8"
+        ],
+        "quotes": [
+          "Create a Login Modal Overlay: When user is not authenticated, show full-screen modal login. Hide dashboard content behind overlay. On successful login, hide overlay.",
+          "Do NOT change router structure. Do NOT refactor existing layout. Do NOT wrap components in new route structures."
+        ]
+      },
+      "acceptanceCriteria": [
+        "A full-screen overlay appears when the user is not authenticated, covering all dashboard content.",
+        "The overlay contains Email and Password input fields and a Login button.",
+        "Submitting with non-empty email and password hides the overlay and shows the app.",
+        "Submitting with empty fields shows a validation error message.",
+        "No existing routes, section switching logic, or layout components are modified."
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Implement authentication state management using localStorage. On successful login, write a session token (e.g., key 'iq_auth_token' with a non-empty string value) to localStorage. On app load, read this key to determine if the user is already authenticated and skip showing the overlay if a valid token is present. On logout, remove the key from localStorage and show the login overlay again.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-8"
+        ],
+        "quotes": [
+          "Store authentication state in localStorage.",
+          "On logout, show login overlay again."
+        ]
+      },
+      "acceptanceCriteria": [
+        "After login, a session token key exists in localStorage.",
+        "Refreshing the page while the token exists skips the login overlay and shows the app directly.",
+        "After logout, the token key is removed from localStorage.",
+        "After logout, the login overlay is displayed again."
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Add a Logout button to the existing app header area (top bar or sidebar header, whichever is rendered in App.tsx or Sidebar.tsx). The button must be visible only when the user is authenticated. Clicking it clears the auth token from localStorage and triggers the login overlay to reappear. Do NOT modify any analytics, chart, regression, insights, PDF export, or AI copilot logic.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-8"
+        ],
+        "quotes": [
+          "Add Logout button in header.",
+          "On logout, show login overlay again.",
+          "Do NOT modify analytics logic. Do NOT change chart, regression, insights, or PDF features."
+        ]
+      },
+      "acceptanceCriteria": [
+        "A Logout button is visible in the header when the user is authenticated.",
+        "Clicking Logout clears the localStorage token and displays the login overlay.",
+        "All analytics, chart, regression, insights, and PDF export features remain fully functional after this change.",
+        "The build compiles successfully with no errors."
+      ]
+    }
+  ],
+  "constraints": [
+    "Do NOT modify the router structure or add new routes.",
+    "Do NOT refactor or wrap existing layout components in new route structures.",
+    "Do NOT modify analytics logic, chart components, regression engine, insights panel, or PDF export.",
+    "Do NOT modify any file listed under frontend.immutablePaths.",
+    "Authentication state must be stored exclusively in localStorage.",
+    "The build must compile successfully."
+  ],
+  "nonGoals": [
+    "Adding a dedicated /login route or landing page.",
+    "Adding a /dashboard redirect or any route-level guards.",
+    "Modifying ChartControls, DynamicChart, StatisticsPanel, InsightsPanel, PredictiveModelPanel, AICopilotPanel, or pdfExporter.",
+    "Backend authentication or session management.",
+    "Internet Identity integration for this feature.",
+    "User registration or password reset flows."
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  }
+}
